@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 import pickle
 
-model = Doc2Vec.load(r'C:\\Dev\\Projects\\ML-XSS-Detection-main\\xss\\models\\doc2vec.mdl')
+model = Doc2Vec.load('/Users/berat/Documents/Projects/XSS-Detector-ML/xss/models/doc2vec.mdl')
 
 def getVec(text):
     features = []
@@ -91,14 +91,13 @@ def getVec(text):
 
 classifiers = []
 
-classifiers.append(['Decision Tree', pickle.load(open(r'C:\\Dev\\Projects\\ML-XSS-Detection-main\\xss\\models\\decision_tree.mdl', 'rb'))])
-classifiers.append(['Random Forest', pickle.load(open(r'C:\\Dev\\Projects\\ML-XSS-Detection-main\\xss\\models\\random_forest.mdl', 'rb'))])
-
-classifiers.append(['Logistic Regression', pickle.load(open(r'C:\\Dev\\Projects\\ML-XSS-Detection-main\\xss\\models\\logistic_regression.mdl', 'rb'))])
-classifiers.append(['Naive Bayes', pickle.load(open(r'C:\\Dev\\Projects\\ML-XSS-Detection-main\\xss\\models\\naive_bayes.mdl', 'rb'))])
-classifiers.append(['KNN', pickle.load(open(r'C:\\Dev\\Projects\\ML-XSS-Detection-main\\xss\\models\\knn.mdl', 'rb'))])
-classifiers.append(['MLP', pickle.load(open(r'C:\\Dev\\Projects\\ML-XSS-Detection-main\\xss\\models\\mlp.mdl', 'rb'))])
-classifiers.append(['SVM', pickle.load(open(r'C:\\Dev\\Projects\\ML-XSS-Detection-main\\xss\\models\\svm.mdl', 'rb'))])
+classifiers.append(['Decision Tree', pickle.load(open('/Users/berat/Documents/Projects/XSS-Detector-ML/xss/models/decision_tree.mdl', 'rb'))])
+classifiers.append(['Random Forest', pickle.load(open('/Users/berat/Documents/Projects/XSS-Detector-ML/xss/models/random_forest.mdl', 'rb'))])
+classifiers.append(['Logistic Regression', pickle.load(open('/Users/berat/Documents/Projects/XSS-Detector-ML/xss/models/logistic_regression.mdl', 'rb'))])
+# classifiers.append(['Naive Bayes', pickle.load(open('/Users/berat/Documents/Projects/XSS-Detector-ML/xss/models/naive_bayes.mdl', 'rb'))])
+classifiers.append(['KNN', pickle.load(open('/Users/berat/Documents/Projects/XSS-Detector-ML/xss/models/knn.mdl', 'rb'))])
+classifiers.append(['MLP', pickle.load(open('/Users/berat/Documents/Projects/XSS-Detector-ML/xss/models/mlp.mdl', 'rb'))])
+classifiers.append(['SVM', pickle.load(open('/Users/berat/Documents/Projects/XSS-Detector-ML/xss/models/svm.mdl', 'rb'))])
 
 def checkQueryParams(query):
     check = True
@@ -112,7 +111,7 @@ if __name__ == "__main__":
     sys.argv[1] = "--xss_detection"
     for i in range(2, n):
         if checkQueryParams(sys.argv[i]):
-            print("reject", end="")	
+            print(" reject", end=" ")	
         else:
-            print("accept", end="")	
+            print(" accept", end=" ")	
     sys.exit(0)

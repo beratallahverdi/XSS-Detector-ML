@@ -20,19 +20,34 @@ class CheckXssDetection
     {
         $post = $request->all();
         $checkString = '';
-        if(!empty($post))
+        if (!empty($post))
             $checkString = urlencode(json_encode($post));
-        $output=null;
-        $retval=null;
-        switch(PHP_OS){
+        $output = null;
+        $retval = null;
+        switch (PHP_OS) {
             case "WINNT":
-                $output = self::execute(`python.exe C:\Dev\Projects\ML-XSS-Detection-main\xss\classifiers.py --xss_detection '{$checkString}'`);
+                $output = self::execute(`python.exe -W ignore C:\Dev\Projects\ML-XSS-Detection-main\xss\classifiers.py --xss_detection '{$checkString}'`);
+                break;
+            case "Darwin":
+                $output = self::execute("python3 -W ignore '/Users/berat/Documents/Projects/XSS-Detector-ML/xss/classifiers.py' --xss_detection '{$checkString}'");
+                return response()->json([$output]);
+                break;
+            case "Linux":
+                $output = shell_exec("python3 -W ignore /Users/berat/Documents/Projects/XSS-Detector-ML/xss/classifiers.py --xss_detection '{$checkString}'");
+                break;
+            default:
+                $output = shell_exec("python3 -W ignore /Users/berat/Documents/Projects/XSS-Detector-ML/xss/classifiers.py --xss_detection '{$checkString}'");
                 break;
         }
-        if(stripos($output, 'reject') !== false){
+        if (strpos($output, 'reject') !== false) {
             return response()->json(['error' => 'XSS Detected'], 403);
         }
         return $next($request);
+    }
+    private static function macOSexecute($command)
+    {
+        $process = shell_exec($command);
+        return $process;
     }
 
     private static function execute($cmd): string
